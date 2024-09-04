@@ -24,5 +24,5 @@ async fn fetch(
 }
 
 async fn root() -> HelloTemplate<'static> {
-    HelloTemplate { name: "askama" }
+    HelloTemplate { name: "Dian" }
 }
