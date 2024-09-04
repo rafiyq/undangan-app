@@ -1,6 +1,13 @@
+use askama_axum::Template;
 use axum::{routing::get, Router};
 use tower_service::Service;
 use worker::*;
+
+#[derive(Template)]
+#[template(path = "index.html")]
+struct HelloTemplate<'a> {
+    name: &'a str,
+}
 
 fn router() -> Router {
     Router::new().route("/", get(root))
@@ -16,6 +23,6 @@ async fn fetch(
     Ok(router().call(req).await?)
 }
 
-pub async fn root() -> &'static str {
-    "Hello Axum!"
+async fn root() -> HelloTemplate<'static> {
+    HelloTemplate { name: "askama" }
 }
