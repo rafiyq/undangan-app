@@ -13,6 +13,7 @@
     rustfmt
     stdenv.cc
     wasm-pack
+    wasm-opt
     worker-build
     wrangler
   ];
@@ -29,12 +30,6 @@
     "serayuzgur.crates"
     "vadimcn.vscode-lldb"
   ];
-
-  idx.workspace = {
-    onCreate = {
-      wasm-install = "rustup target add wasm32-unknown-unknown";
-    };
-  };
 
   # Enable previews and customize configuration
   idx.previews = {
