@@ -5,7 +5,7 @@
 
 {% block content %}
   Halo, {{ guestname }}!
-  {% if datetime_remaining > 0 %}
+  {% if countdown_ongoing %}
     {% include "countdown.html" %}
   {% endif %}
   {% call super() %}
