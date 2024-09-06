@@ -1,16 +1,13 @@
-use askama_axum::Template;
+mod templates;
+
 use axum::{routing::get, Router};
 use tower_service::Service;
-use worker::*;
-
-#[derive(Template)]
-#[template(path = "index.html")]
-struct HelloTemplate<'a> {
-    name: &'a str,
-}
+use worker::{event, Context, Env, HttpRequest, Result};
 
 fn router() -> Router {
-    Router::new().route("/", get(root))
+    Router::new()
+        .route("/", get(index))
+        .nest_service("/countdown", get(index))
 }
 
 #[event(fetch)]
@@ -23,6 +20,13 @@ async fn fetch(
     Ok(router().call(req).await?)
 }
 
-async fn root() -> HelloTemplate<'static> {
-    HelloTemplate { name: "Dian" }
+async fn index() -> templates::Index {
+    
+    // sleep(Duration::from_secs(1)).await;
+
+    templates::Index {
+        title: "Beranda".to_string(), 
+        guestname: "Dian".to_string(),
+        datetime_remaining: 102
+    }
 }

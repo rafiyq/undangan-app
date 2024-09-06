@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dian & Rafiyq</title>
-    <script src="/static/htmx.min.js"></script>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    {% block head %}{% endblock %}
 </head>
-<body id="content">
-    {% block content %} {% endblock %}
+<body>
+    <article id="content">{% block content %}{% endblock %}</article>
 </body>
 </html>
