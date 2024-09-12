@@ -18,7 +18,7 @@ in {
       rust-src
       rustc
       rustfmt
-      targets.wasm32-unknown-unknown.stable.rust-std
+      targets.wasm32-unknown-unknown.latest.rust-std
     ])
     pkgs.nodejs
     pkgs.stdenv.cc
@@ -27,6 +27,7 @@ in {
   # Sets environment variables in the workspace
   env = {
     RUST_SRC_PATH = "${fenix.stable.rust-src}/lib/rustlib/src/rust/library";
+    PATH = "$PATH:$HOME/.cargo/bin";
   };
 
   # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
@@ -42,7 +43,6 @@ in {
     npm-update = "npm install -g npm@latest";
     wrangler-install = "npm install -g wrangler@latest";
     worker-build-install = "cargo install worker-build";
-    path-update = "PATH=$PATH:$HOME/.cargo/bin";
   };
 
   # Enable previews and customize configuration
