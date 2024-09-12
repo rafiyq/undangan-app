@@ -27,7 +27,7 @@ in {
   # Sets environment variables in the workspace
   env = {
     RUST_SRC_PATH = "${fenix.stable.rust-src}/lib/rustlib/src/rust/library";
-    PATH = "$PATH:$HOME/.cargo/bin";
+    PATH = ["$HOME/.cargo/bin"];
   };
 
   # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
