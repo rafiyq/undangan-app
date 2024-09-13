@@ -1,45 +1,52 @@
 mod templates;
 mod utils;
 
-use axum::{routing::get, Router};
-use tower_service::Service;
-use worker::{event, Context, Env, HttpRequest, Result};
+use askama::Template;
+use worker::{console_log, event, Context, Env, Request, Response, Result, Router};
 
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
 
-fn router() -> Router {
-    Router::new()
-        .route("/", get(index))
-        .route("/update", get(update))
-        // .nest_service("/update", get(update().))
-        // .route_layer("/update", get(update))
-}
-
 #[event(fetch)]
 async fn fetch(
-    req: HttpRequest,
-    _env: Env,
+    req: Request,
+    env: Env,
     _ctx: Context,
-) -> Result<axum::http::Response<axum::body::Body>> {
+) -> Result<Response> {
     console_error_panic_hook::set_once();
-    Ok(router().call(req).await?)
-}
 
-async fn index() -> templates::Index {
-    let dt_remaining = utils::make_duration(DT_UNDANGAN);
-    let day_time = templates::DayAndTime::from_timedelta(dt_remaining);
-
-    templates::Index {
-        title: "Beranda".to_string(), 
-        guestname: "Dian".to_string(),
-        countdown_ongoing: !day_time.is_timeout(),
-        countdown_remaining: day_time,
-    }
-}
-
-async fn update() -> templates::Countdown {
-    let dt_remaining = utils::make_duration(DT_UNDANGAN);    
-    templates::Countdown { 
-        countdown_remaining: templates::DayAndTime::from_timedelta(dt_remaining) 
-    }
+    Router::new()
+        .get_async("/", |_, _| async move {
+            let dt_remaining = utils::make_duration(DT_UNDANGAN);
+            let day_time = templates::DayAndTime::from_timedelta(dt_remaining);
+            let index = templates::Index {
+                title: "Beranda".to_string(), 
+                guestname: "Dian".to_string(),
+                countdown_ongoing: !day_time.is_timeout(),
+                countdown_remaining: day_time,
+            };
+            let html = index.render().unwrap();
+            Response::from_html(html)
+        })
+        .get_async("/update", |_, _| async move {
+            let dt_remaining = utils::make_duration(DT_UNDANGAN);
+            let countdown = templates::Countdown { 
+                countdown_remaining: templates::DayAndTime::from_timedelta(dt_remaining) 
+            };
+            let html = countdown.render().unwrap();
+            Response::from_html(html)
+        })
+        .get_async("assets/:filename", |_req, ctx| async move {
+            console_log!("hello");
+            if let Some(filename) = ctx.param("filename") {
+                let assets = ctx.kv("assets")?;
+                console_log!("filename: {}", filename);
+                return match assets.get(filename).bytes().await? {
+                    Some(file_content) => Response::from_bytes(file_content),
+                    None => Response::error("Not found", 404)
+                    
+                };
+            }
+            Response::error("Bad Request", 400)
+        })
+        .run(req, env).await
 }

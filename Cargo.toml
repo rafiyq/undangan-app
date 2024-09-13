@@ -15,11 +15,8 @@ wasm-opt = false
 crate-type = ["cdylib"]
 
 [dependencies]
-askama = { version = "0.12.1", features = ["with-axum"] }
-askama_axum = "0.4.0"
-worker = { version="0.3.4", features=['http', 'axum'] }
-worker-macros = { version="0.3.4", features=['http'] }
-axum  = { version = "0.7", default-features = false }
-tower-service = "0.3.3"
-console_error_panic_hook = { version = "0.1.7" }
+askama = { version = "0.12.1" }
 chrono = "0.4.38"
+console_error_panic_hook = { version = "0.1.7" }
+worker = { version="0.3.4", features=['http'] }
+worker-macros = { version="0.3.4", features=['http'] }

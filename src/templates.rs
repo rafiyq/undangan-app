@@ -1,5 +1,5 @@
 use std::fmt::{self, Formatter, Display};
-use askama_axum::Template;
+use askama::Template;
 use chrono::TimeDelta;
 
 pub struct DayAndTime {
