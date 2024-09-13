@@ -6,5 +6,9 @@ routes = [
   { pattern = "dianrafiyq.site", custom_domain = true }
 ]
 
+[[kv_namespaces]]
+binding = "assets"
+id = "eebb5dd628ad493fba72a3e9b42242df"
+
 [build]
 command = "worker-build --release"

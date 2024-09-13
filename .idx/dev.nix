@@ -12,12 +12,12 @@ in {
 
   # Use https://search.nixos.org/packages to find packages
   packages = [
-    (with fenix; with stable; combine [
-      cargo
-      clippy
-      rust-src
-      rustc
-      rustfmt
+    (with fenix; combine [
+      minimal.cargo
+      # clippy
+      # rust-src
+      minimal.rustc
+      # rustfmt
       targets.wasm32-unknown-unknown.latest.rust-std
     ])
     pkgs.nodejs
@@ -50,10 +50,7 @@ in {
     enable = true;
     previews = {
       web = {
-        command = [
-          "wrangler"
-          "dev"
-        ];
+        command = ["wrangler dev"];
         manager = "web";
       };
     };
