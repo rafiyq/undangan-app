@@ -1,6 +1,15 @@
 use std::fmt::{self, Formatter, Display};
 use askama::Template;
 use chrono::TimeDelta;
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+pub struct Guest {
+	id: u32,
+	username: String,
+	fullname: String,
+	information: String,
+}
 
 pub struct DayAndTime {
     days: u32,

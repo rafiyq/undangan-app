@@ -2,11 +2,12 @@ mod templates;
 mod utils;
 
 use askama::Template;
-use worker::{console_log, event, Context, Env, Request, Response, Result, Router};
+use templates::Guest;
+use worker::{console_log, event, query, Context, Env, Request, Response, Result, Router};
 
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
 
-#[event(fetch)]
+#[event(fetch, respond_with_errors)]
 async fn fetch(
     req: Request,
     env: Env,
@@ -45,6 +46,22 @@ async fn fetch(
                     None => Response::error("Not found", 404)
                     
                 };
+            }
+            Response::error("Bad Request", 400)
+        })
+        .get_async("/tamu/:username", |_, ctx| async move {
+            if let Some(username) = ctx.param("username") {
+                let d1 = ctx.env.d1("guest-list")?;
+			    let query = query!(
+                    &d1,
+                    "SELECT * FROM Guests WHERE UserName = ?1",
+                    &username,
+                )?;
+			    let result = query.first::<Guest>(None).await?;
+			    let _ = match result {
+				    Some(guest) => Response::from_json(&guest),
+				    None => Response::error("Not found", 404),
+			    };
             }
             Response::error("Bad Request", 400)
         })

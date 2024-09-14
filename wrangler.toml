@@ -10,5 +10,10 @@ routes = [
 binding = "assets"
 id = "eebb5dd628ad493fba72a3e9b42242df"
 
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "guest-list"
+database_id = "4188cd29-38ac-4c78-8f9d-07288a1a494a"
+
 [build]
 command = "worker-build --release"
