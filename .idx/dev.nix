@@ -14,10 +14,10 @@ in {
   packages = [
     (with fenix; combine [
       minimal.cargo
-      # clippy
-      # rust-src
+      latest.clippy
+      latest.rust-src
       minimal.rustc
-      # rustfmt
+      latest.rustfmt
       targets.wasm32-unknown-unknown.latest.rust-std
     ])
     pkgs.nodejs
@@ -26,7 +26,7 @@ in {
 
   # Sets environment variables in the workspace
   env = {
-    RUST_SRC_PATH = "${fenix.stable.rust-src}/lib/rustlib/src/rust/library";
+    RUST_SRC_PATH = "${fenix.latest.rust-src}/lib/rustlib/src/rust/library";
     PATH = ["$HOME/.cargo/bin"];
   };
 
@@ -43,16 +43,5 @@ in {
     npm-update = "npm install -g npm@latest";
     wrangler-install = "npm install -g wrangler@latest";
     worker-build-install = "cargo install worker-build";
-  };
-
-  # Enable previews and customize configuration
-  idx.previews = {
-    enable = true;
-    previews = {
-      web = {
-        command = ["wrangler dev"];
-        manager = "web";
-      };
-    };
   };
 }
