@@ -4,7 +4,7 @@
 {% block head %}{% include "head.html" %}{% endblock %}
 
 {% block content %}
-  Selamat Datang!
+  {% include "greeting.html" %}
   {% if remaining.is_ongoing() %}
     {% include "countdown.html" %}
   {% endif %}

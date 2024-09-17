@@ -1,0 +1,5 @@
+{% if let Some(guest) = guest %}
+  <h1>Selamat Datang, {{ guest.fullname }}</h1>
+{% else %}
+  <h1>Selamat Datang!</h1>
+{% endif %}

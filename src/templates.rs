@@ -16,10 +16,8 @@ pub struct Remaining {
 }
 
 impl Remaining {
-    pub fn from_timedelta(timedelta: TimeDelta) -> Self {
-        Remaining {
-            remaining: timedelta
-        }
+    pub fn new(remaining: TimeDelta) -> Self {
+        Remaining { remaining }
     }
     pub fn is_timeout(&self) -> bool {
         self.remaining.is_zero()
@@ -51,6 +49,7 @@ impl Display for Remaining {
 #[derive(Template)]
 #[template(path = "index.html")]
 pub struct IndexTemplate {
+    pub guest: Option<Guest>,
     pub remaining: Remaining
 }
 

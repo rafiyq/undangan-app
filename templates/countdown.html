@@ -1,8 +1,15 @@
-<div 
+<section 
     id="countdown" 
     hx-get="/update" 
     hx-trigger="every 1s"
     hx-swap="innerHTML"
     >
+    <p>Comming Soon</p>
+    <ul>
+        <li>Hari<span>{{ remaining.days() }}</span></li>
+        <li>Jam<span>{{ remaining.hours() }}</span></li>
+        <li>Menit<span>{{ remaining.minutes() }}</span></li>
+        <li>Detik<span>{{ remaining.seconds() }}</span></li>
+    </ul>
     {{ remaining }}
-</div>
+</section>

@@ -6,6 +6,7 @@ use templates::{Countdown, Guest, IndexTemplate, Remaining};
 use worker::{console_log, event, query, Context, Env, Request, Response, Result, Router};
 
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
+const DATE_TIME: &str = "27-Okt-2024 08:00:00 +0700";
 
 #[event(fetch, respond_with_errors)]
 async fn fetch(
@@ -17,16 +18,18 @@ async fn fetch(
 
     Router::new()
         .get_async("/", |_, _| async move {
-            let dt_remaining = utils::make_duration(DT_UNDANGAN);
-            let remaining = Remaining::from_timedelta(dt_remaining);
-            let index = IndexTemplate { remaining };
+            let remaining = utils::make_duration(DT_UNDANGAN);
+            let index = IndexTemplate { 
+                guest: None,
+                remaining: Remaining::new(remaining)
+            };
             let html = index.render().unwrap();
             Response::from_html(html)
         })
         .get_async("/update", |_, _| async move {
-            let dt_remaining = utils::make_duration(DT_UNDANGAN);
+            let remaining = utils::make_duration(DT_UNDANGAN);
             let countdown = Countdown { 
-                remaining: Remaining::from_timedelta(dt_remaining) 
+                remaining: Remaining::new(remaining) 
             };
             let html = countdown.render().unwrap();
             Response::from_html(html)
