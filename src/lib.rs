@@ -2,7 +2,7 @@ mod templates;
 mod utils;
 
 use askama::Template;
-use templates::Guest;
+use templates::{Countdown, Guest, IndexTemplate, Remaining};
 use worker::{console_log, event, query, Context, Env, Request, Response, Result, Router};
 
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
@@ -18,18 +18,18 @@ async fn fetch(
     Router::new()
         .get_async("/", |_, _| async move {
             let dt_remaining = utils::make_duration(DT_UNDANGAN);
-            let day_time = templates::DayAndTime::from_timedelta(dt_remaining);
-            let index = templates::Index {
+            let day_time = Remaining::from_timedelta(dt_remaining);
+            let index = IndexTemplate {
                 countdown_ongoing: !day_time.is_timeout(),
-                countdown_remaining: day_time,
+                remaining: day_time,
             };
             let html = index.render().unwrap();
             Response::from_html(html)
         })
         .get_async("/update", |_, _| async move {
             let dt_remaining = utils::make_duration(DT_UNDANGAN);
-            let countdown = templates::Countdown { 
-                countdown_remaining: templates::DayAndTime::from_timedelta(dt_remaining) 
+            let countdown = Countdown { 
+                remaining: Remaining::from_timedelta(dt_remaining) 
             };
             let html = countdown.render().unwrap();
             Response::from_html(html)

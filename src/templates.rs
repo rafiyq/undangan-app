@@ -11,16 +11,16 @@ pub struct Guest {
 	information: String,
 }
 
-pub struct DayAndTime {
+pub struct Remaining {
     days: u32,
     hours: u32,
     minutes: u32,
     seconds: u32
 }
 
-impl DayAndTime {
+impl Remaining {
     pub fn from_timedelta(timedelta: TimeDelta) -> Self {
-        DayAndTime {
+        Remaining {
             days: timedelta.num_days() as u32,
             hours: (timedelta.num_hours() % 24) as u32,
             minutes: (timedelta.num_minutes() % 60) as u32,
@@ -36,22 +36,22 @@ impl DayAndTime {
     }
 }
 
-impl Display for DayAndTime {
+impl Display for Remaining {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "{}-{}:{}:{}",
+        write!(f, "{} Day(s), {}:{}:{}",
             self.days, self.hours, self.minutes, self.seconds)
     }
 }
 
 #[derive(Template)]
 #[template(path = "index.html")]
-pub struct Index {
+pub struct IndexTemplate {
     pub countdown_ongoing: bool,
-    pub countdown_remaining: DayAndTime
+    pub remaining: Remaining
 }
 
 #[derive(Template)]
 #[template(path = "countdown.html")]
 pub struct Countdown {
-    pub countdown_remaining: DayAndTime
+    pub remaining: Remaining
 }
