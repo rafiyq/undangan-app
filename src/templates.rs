@@ -12,41 +12,45 @@ pub struct Guest {
 }
 
 pub struct Remaining {
-    days: u32,
-    hours: u32,
-    minutes: u32,
-    seconds: u32
+    remaining: TimeDelta
 }
 
 impl Remaining {
     pub fn from_timedelta(timedelta: TimeDelta) -> Self {
         Remaining {
-            days: timedelta.num_days() as u32,
-            hours: (timedelta.num_hours() % 24) as u32,
-            minutes: (timedelta.num_minutes() % 60) as u32,
-            seconds: (timedelta.num_seconds() % 60) as u32
+            remaining: timedelta
         }
-
     }
     pub fn is_timeout(&self) -> bool {
-        self.days == 0 && 
-        self.hours == 0 && 
-        self.minutes == 0 && 
-        self.seconds == 0
+        self.remaining.is_zero()
+    }
+    pub fn is_ongoing(&self) -> bool {
+        !self.is_timeout()
+    }
+    pub fn days(&self) -> String {
+        format!("{:02}", self.remaining.num_days())
+    }
+    pub fn hours(&self) -> String {
+        format!("{:02}", self.remaining.num_hours() % 24)
+    }
+    pub fn minutes(&self) -> String {
+        format!("{:02}", self.remaining.num_minutes() % 60)
+    }
+    pub fn seconds(&self) -> String {
+        format!("{:02}", self.remaining.num_seconds() % 60)
     }
 }
 
 impl Display for Remaining {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         write!(f, "{} Day(s), {}:{}:{}",
-            self.days, self.hours, self.minutes, self.seconds)
+            self.days(), self.hours(), self.minutes(), self.seconds())
     }
 }
 
 #[derive(Template)]
 #[template(path = "index.html")]
 pub struct IndexTemplate {
-    pub countdown_ongoing: bool,
     pub remaining: Remaining
 }
 

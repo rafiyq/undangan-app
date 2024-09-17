@@ -5,7 +5,7 @@
 
 {% block content %}
   Selamat Datang!
-  {% if countdown_ongoing %}
+  {% if remaining.is_ongoing() %}
     {% include "countdown.html" %}
   {% endif %}
   {% call super() %}

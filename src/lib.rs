@@ -18,11 +18,8 @@ async fn fetch(
     Router::new()
         .get_async("/", |_, _| async move {
             let dt_remaining = utils::make_duration(DT_UNDANGAN);
-            let day_time = Remaining::from_timedelta(dt_remaining);
-            let index = IndexTemplate {
-                countdown_ongoing: !day_time.is_timeout(),
-                remaining: day_time,
-            };
+            let remaining = Remaining::from_timedelta(dt_remaining);
+            let index = IndexTemplate { remaining };
             let html = index.render().unwrap();
             Response::from_html(html)
         })
