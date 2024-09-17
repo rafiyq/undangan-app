@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Beranda - Dian Rafiyq{% endblock %}
 {% block head %}{% include "head.html" %}{% endblock %}
 
 {% block content %}
-  Halo, {{ guestname }}!
+  Selamat Datang!
   {% if countdown_ongoing %}
     {% include "countdown.html" %}
   {% endif %}

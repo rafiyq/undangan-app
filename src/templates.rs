@@ -46,8 +46,6 @@ impl Display for DayAndTime {
 #[derive(Template)]
 #[template(path = "index.html")]
 pub struct Index {
-    pub title: String,
-    pub guestname: String,
     pub countdown_ongoing: bool,
     pub countdown_remaining: DayAndTime
 }

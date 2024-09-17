@@ -20,8 +20,6 @@ async fn fetch(
             let dt_remaining = utils::make_duration(DT_UNDANGAN);
             let day_time = templates::DayAndTime::from_timedelta(dt_remaining);
             let index = templates::Index {
-                title: "Beranda".to_string(), 
-                guestname: "Dian".to_string(),
                 countdown_ongoing: !day_time.is_timeout(),
                 countdown_remaining: day_time,
             };
