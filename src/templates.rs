@@ -5,10 +5,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct Guest {
-	id: u32,
 	username: String,
 	fullname: String,
-	information: String,
+	address: String,
+    time: String
 }
 
 pub struct Remaining {
