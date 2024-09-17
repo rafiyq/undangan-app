@@ -6,7 +6,7 @@ use templates::{Countdown, Guest, IndexTemplate, Remaining};
 use worker::{console_log, event, query, Context, Env, Request, Response, Result, Router};
 
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
-const DATE_TIME: &str = "27-Okt-2024 08:00:00 +0700";
+const _DATE_TIME: &str = "27-Okt-2024 08:00:00 +0700";
 
 #[event(fetch, respond_with_errors)]
 async fn fetch(
@@ -57,7 +57,17 @@ async fn fetch(
                 )?;
 			    let result = query.first::<Guest>(None).await?;
 			    let _ = match result {
-				    Some(guest) => Response::from_json(&guest),
+				    Some(guest) => {
+                        let remaining = utils::make_duration(DT_UNDANGAN);
+                        let index = IndexTemplate { 
+                            guest: Some(guest),
+                            remaining: Remaining::new(remaining)
+                        };
+                        let html = index.render().unwrap();
+                        Response::from_html(html)
+                        // Response::from_json(&guest)
+                        
+                    },
 				    None => Response::error("Not found", 404),
 			    };
             }
