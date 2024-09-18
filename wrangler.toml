@@ -9,6 +9,7 @@ routes = [
 [[kv_namespaces]]
 binding = "assets"
 id = "eebb5dd628ad493fba72a3e9b42242df"
+preview_id = "c6b91edfd85f498b977af6f19c12600e"
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB

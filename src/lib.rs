@@ -4,7 +4,7 @@ mod utils;
 use askama::Template;
 use templates::{Countdown, Guest, IndexTemplate, Remaining};
 use utils::get_content_type;
-use worker::{console_log, event, Context, Env, Headers, Request, Response, Result, Router};
+use worker::{event, Context, Env, Headers, Request, Response, Result, Router};
 
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
 const _DATE_TIME: &str = "27-Okt-2024 08:00:00 +0700";
@@ -35,22 +35,18 @@ async fn fetch(
             let html = countdown.render().unwrap();
             Response::from_html(html)
         })
-        .get_async("assets/:filename", |_req, ctx| async move {
-            console_log!("hello");
-            if let Some(filename) = ctx.param("filename") {
-                let assets = ctx.kv("assets")?;
-                console_log!("filename: {}", filename);
-                return match assets.get(filename).bytes().await? {
-                    Some(file_content) => {
-                        let mut headers = Headers::new();
-                        headers.set("Content-Type", get_content_type(filename))?;
-                        Ok(Response::from_bytes(file_content)?.with_headers(headers))
-                    },
-                    None => Response::error("Not found", 404)
-                    
-                };
-            }
-            Response::error("Bad Request", 400)
+        .get_async("/assets/:filename", |_, ctx| async move {
+            let filename = ctx.param("filename").unwrap();
+            let assets = ctx.kv("assets")?;
+            let result = assets.get(filename).bytes().await?;
+            return match result {
+                Some(file_content) => {
+                    let mut headers = Headers::new();
+                    headers.set("Content-Type", get_content_type(filename))?;
+                    Ok(Response::from_bytes(file_content)?.with_headers(headers))
+                },
+                None => Response::error("Item Not Found", 404)
+            };
         })
         .get_async("/tamu/:username", |_, ctx| async move {
             let username = ctx.param("username").unwrap();
