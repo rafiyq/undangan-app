@@ -3,7 +3,8 @@ mod utils;
 
 use askama::Template;
 use templates::{Countdown, Guest, IndexTemplate, Remaining};
-use worker::{console_log, event, query, Context, Env, Request, Response, Result, Router};
+use utils::get_content_type;
+use worker::{console_log, event, Context, Env, Headers, Request, Response, Result, Router};
 
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
 const _DATE_TIME: &str = "27-Okt-2024 08:00:00 +0700";
@@ -40,7 +41,11 @@ async fn fetch(
                 let assets = ctx.kv("assets")?;
                 console_log!("filename: {}", filename);
                 return match assets.get(filename).bytes().await? {
-                    Some(file_content) => Response::from_bytes(file_content),
+                    Some(file_content) => {
+                        let mut headers = Headers::new();
+                        headers.set("Content-Type", get_content_type(filename))?;
+                        Ok(Response::from_bytes(file_content)?.with_headers(headers))
+                    },
                     None => Response::error("Not found", 404)
                     
                 };
@@ -48,30 +53,23 @@ async fn fetch(
             Response::error("Bad Request", 400)
         })
         .get_async("/tamu/:username", |_, ctx| async move {
-            if let Some(username) = ctx.param("username") {
-                let d1 = ctx.env.d1("guest-list")?;
-			    let query = query!(
-                    &d1,
-                    "SELECT * FROM Guests WHERE UserName = ?1",
-                    &username,
-                )?;
-			    let result = query.first::<Guest>(None).await?;
-			    let _ = match result {
-				    Some(guest) => {
-                        let remaining = utils::make_duration(DT_UNDANGAN);
-                        let index = IndexTemplate { 
-                            guest: Some(guest),
-                            remaining: Remaining::new(remaining)
-                        };
-                        let html = index.render().unwrap();
-                        Response::from_html(html)
-                        // Response::from_json(&guest)
-                        
-                    },
-				    None => Response::error("Not found", 404),
-			    };
-            }
-            Response::error("Bad Request", 400)
+            let username = ctx.param("username").unwrap();
+            let d1 = ctx.env.d1("DB")?;
+			let statement = d1.prepare("SELECT * FROM Guests WHERE username = ?1");
+			let query = statement.bind(&[username.into()])?;
+			let result = query.first::<Guest>(None).await?;
+			match result {
+				Some(guest) => {
+                    let remaining = utils::make_duration(DT_UNDANGAN);
+                    let index = IndexTemplate { 
+                        guest: Some(guest),
+                        remaining: Remaining::new(remaining)
+                    };
+                    let html = index.render().unwrap();
+                    Response::from_html(html)
+                },
+				None => Response::error("Not found", 404),
+			}
         })
         .run(req, env).await
 }

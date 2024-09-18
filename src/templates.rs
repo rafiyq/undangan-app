@@ -3,6 +3,7 @@ use askama::Template;
 use chrono::TimeDelta;
 use serde::{Deserialize, Serialize};
 
+#[derive(Debug)]
 #[derive(Serialize, Deserialize)]
 pub struct Guest {
 	username: String,
