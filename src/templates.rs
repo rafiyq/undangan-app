@@ -25,8 +25,8 @@ impl Remaining {
     pub fn is_ongoing(&self) -> bool {
         !self.is_timeout()
     }
-    pub fn days(&self) -> String {
-        format!("{:02}", self.remaining.num_days())
+    pub fn days(&self) -> i64 {
+        self.remaining.num_days()
     }
     pub fn hours(&self) -> String {
         format!("{:02}", self.remaining.num_hours() % 24)
