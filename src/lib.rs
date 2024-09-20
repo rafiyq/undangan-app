@@ -38,12 +38,27 @@ async fn fetch(
         .get_async("/assets/:filename", |_, ctx| async move {
             let filename = ctx.param("filename").unwrap();
             let assets = ctx.kv("assets")?;
-            let result = assets.get(filename).bytes().await?;
-            return match result {
+
+            return match assets.get(filename).bytes().await? {
                 Some(file_content) => {
                     let mut headers = Headers::new();
                     headers.set("Content-Type", get_content_type(filename))?;
                     Ok(Response::from_bytes(file_content)?.with_headers(headers))
+                },
+                None => Response::error("Item Not Found", 404)
+            };
+        })
+        .get_async("/bucket/:filename", |_, ctx| async move {
+            let filename = ctx.param("filename").unwrap();
+            let bucket = ctx.bucket("bucket")?;
+
+            return match bucket.get(filename).execute().await? {
+                Some(object) => {
+                    let body = object.body().unwrap().bytes().await?;
+                    let http_header = object.http_metadata().content_type.unwrap_or("application/octet-stream".to_string());
+                    let mut headers = Headers::new();
+                    headers.set("Content-Type", &http_header)?;
+                    Ok(Response::from_bytes(body)?.with_headers(headers))
                 },
                 None => Response::error("Item Not Found", 404)
             };
@@ -53,8 +68,8 @@ async fn fetch(
             let d1 = ctx.env.d1("DB")?;
 			let statement = d1.prepare("SELECT * FROM Guests WHERE username = ?1");
 			let query = statement.bind(&[username.into()])?;
-			let result = query.first::<Guest>(None).await?;
-			match result {
+
+			match query.first::<Guest>(None).await? {
 				Some(guest) => {
                     let remaining = utils::make_duration(DT_UNDANGAN);
                     let index = IndexTemplate { 

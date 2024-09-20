@@ -17,5 +17,10 @@ database_name = "guest-list"
 database_id = "4188cd29-38ac-4c78-8f9d-07288a1a494a"
 preview_database_id = "33b96b18-465e-4994-be58-c75d49b2172f"
 
+[[r2_buckets]]
+binding = "bucket"
+bucket_name = "undangan"
+preview_bucket_name = "undangan-preview"
+
 [build]
 command = "worker-build --release"
