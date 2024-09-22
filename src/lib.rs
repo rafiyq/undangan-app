@@ -71,10 +71,10 @@ async fn fetch(
 
 			match query.first::<Guest>(None).await? {
 				Some(guest) => {
-                    let remaining = utils::make_duration(DT_UNDANGAN);
+                    // let remaining = utils::make_duration(DT_UNDANGAN);
                     let index = IndexTemplate { 
                         guest: Some(guest),
-                        remaining: Remaining::new(remaining)
+                        remaining: Remaining::from_rfc3339(DT_UNDANGAN)
                     };
                     let html = index.render().unwrap();
                     Response::from_html(html)

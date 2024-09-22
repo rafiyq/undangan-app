@@ -1,6 +1,6 @@
 use std::fmt::{self, Formatter, Display};
 use askama::Template;
-use chrono::TimeDelta;
+use chrono::{DateTime, Local, TimeDelta};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -12,15 +12,25 @@ pub struct Guest {
 }
 
 pub struct Remaining {
-    remaining: TimeDelta
+    remaining: TimeDelta,
+    _end_date: String
 }
 
 impl Remaining {
     pub fn new(remaining: TimeDelta) -> Self {
-        Remaining { remaining }
+        Remaining { remaining, _end_date: String::new() }
+    }
+    pub fn from_rfc3339(datetime: &str) -> Self {
+        let remaining = DateTime::parse_from_rfc3339(datetime).unwrap()
+            .signed_duration_since(Local::now());
+        Remaining { remaining, _end_date: datetime.to_string() }
+    }
+    pub fn _update(mut self) {
+        self.remaining = DateTime::parse_from_rfc3339(self._end_date.as_str()).unwrap()
+            .signed_duration_since(Local::now());
     }
     pub fn is_timeout(&self) -> bool {
-        self.remaining.is_zero()
+        self.remaining.num_seconds() < 0
     }
     pub fn is_ongoing(&self) -> bool {
         !self.is_timeout()
