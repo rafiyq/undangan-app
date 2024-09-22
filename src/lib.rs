@@ -18,22 +18,18 @@ async fn fetch(
     console_error_panic_hook::set_once();
 
     Router::new()
-        .get_async("/", |_, _| async move {
-            let remaining = utils::make_duration(DT_UNDANGAN);
-            let index = IndexTemplate { 
-                guest: None,
-                remaining: Remaining::new(remaining)
-            };
-            let html = index.render().unwrap();
-            Response::from_html(html)
-        })
-        .get_async("/countdown", |_, _| async move {
-            let remaining = utils::make_duration(DT_UNDANGAN);
-            let countdown = Countdown { 
-                remaining: Remaining::new(remaining) 
-            };
-            let html = countdown.render().unwrap();
-            Response::from_html(html)
+        .get_async("/", |_, _| async move { index(None) })
+        .get_async("/countdown", |_, _| async move { countdown() })
+        .get_async("/tamu/:username", |_, ctx| async move {
+            let username = ctx.param("username").unwrap();
+            let d1 = ctx.env.d1("DB")?;
+            let statement = d1.prepare("SELECT * FROM Guests WHERE username = ?1");
+            let query = statement.bind(&[username.into()])?;
+
+            match query.first::<Guest>(None).await? {
+                Some(guest) => index(Some(guest)),
+                None => Response::error("Not found", 404),
+            }
         })
         .get_async("/assets/:filename", |_, ctx| async move {
             let filename = ctx.param("filename").unwrap();
@@ -63,24 +59,20 @@ async fn fetch(
                 None => Response::error("Item Not Found", 404)
             };
         })
-        .get_async("/tamu/:username", |_, ctx| async move {
-            let username = ctx.param("username").unwrap();
-            let d1 = ctx.env.d1("DB")?;
-			let statement = d1.prepare("SELECT * FROM Guests WHERE username = ?1");
-			let query = statement.bind(&[username.into()])?;
-
-			match query.first::<Guest>(None).await? {
-				Some(guest) => {
-                    // let remaining = utils::make_duration(DT_UNDANGAN);
-                    let index = IndexTemplate { 
-                        guest: Some(guest),
-                        remaining: Remaining::from_rfc3339(DT_UNDANGAN)
-                    };
-                    let html = index.render().unwrap();
-                    Response::from_html(html)
-                },
-				None => Response::error("Not found", 404),
-			}
-        })
         .run(req, env).await
+}
+
+fn index(guest: Option<Guest>) -> Result<Response> {
+    let index = IndexTemplate { 
+        guest,
+        remaining: Remaining::from_rfc3339(DT_UNDANGAN)
+    };
+    Response::from_html(index.render().unwrap())
+}
+
+fn countdown() -> Result<Response> {
+    let countdown = Countdown {
+        remaining: Remaining::from_rfc3339(DT_UNDANGAN)
+    };
+    Response::from_html(countdown.render().unwrap())
 }

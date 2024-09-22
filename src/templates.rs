@@ -17,7 +17,7 @@ pub struct Remaining {
 }
 
 impl Remaining {
-    pub fn new(remaining: TimeDelta) -> Self {
+    pub fn _new(remaining: TimeDelta) -> Self {
         Remaining { remaining, _end_date: String::new() }
     }
     pub fn from_rfc3339(datetime: &str) -> Self {
