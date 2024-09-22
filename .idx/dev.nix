@@ -12,13 +12,13 @@ in {
 
   # Use https://search.nixos.org/packages to find packages
   packages = [
-    (with fenix; combine [
-      minimal.cargo
-      latest.clippy
-      latest.rust-src
-      minimal.rustc
-      latest.rustfmt
-      targets.wasm32-unknown-unknown.latest.rust-std
+    (with fenix; with stable; combine [
+      cargo
+      clippy
+      rust-src
+      rustc
+      rustfmt
+      targets.wasm32-unknown-unknown.stable.rust-std
     ])
     pkgs.nodejs
     pkgs.stdenv.cc
@@ -36,12 +36,14 @@ in {
     "tamasfe.even-better-toml"
     "fill-labs.dependi"
     "vadimcn.vscode-lldb"
+    "bradlc.vscode-tailwindcss"
   ];
 
   # Commands to execute when the workspace is created and opened for the first time.
   idx.workspace.onCreate = {
     npm-update = "npm install -g npm@latest";
     wrangler-install = "npm install -g wrangler@latest";
+    tailwindcss-install = "npm install -g tailwindcss@latest";
     worker-build-install = "cargo install worker-build";
   };
 }
