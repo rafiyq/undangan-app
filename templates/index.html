@@ -4,9 +4,11 @@
 {% block head %}{% include "head.html" %}{% endblock %}
 
 {% block content %}
-  {% include "greeting.html" %}
-  {% if remaining.is_ongoing() %}
+  <article class="relative gap-6 bg-blue-50 px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
     {% include "countdown.html" %}
-  {% endif %}
-  {% call super() %}
+    {% include "occasion.html" %}
+    {% include "greeting.html" %}
+    <button class="">Buka Undangan</button>
+    {% call super() %}
+  </article>
 {% endblock %}

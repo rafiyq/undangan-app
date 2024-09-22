@@ -1,15 +1,21 @@
-<section 
-    id="countdown" 
-    hx-get="/update" 
+{% if remaining.days() > 0 %}
+  <section 
+    id="countdown"
+    class="dancing-script-family text-center"
+    >
+    <h1 class="text-4xl">{{ remaining.days() }}</h1>
+    <p>Hari lagi</p>
+  </section>
+{% else if remaining.is_ongoing() %}
+  <ul 
+    id="countdown"
+    class="flex flex-row gap-4 justify-center text-center"
+    hx-get="/countdown" 
     hx-trigger="every 1s"
     hx-swap="innerHTML"
     >
-    <p>Comming Soon</p>
-    <ul>
-        <li>Hari<span>{{ remaining.days() }}</span></li>
-        <li>Jam<span>{{ remaining.hours() }}</span></li>
-        <li>Menit<span>{{ remaining.minutes() }}</span></li>
-        <li>Detik<span>{{ remaining.seconds() }}</span></li>
-    </ul>
-    {{ remaining }}
-</section>
+    <li><h1 class="text-4xl">{{ remaining.hours() }}</h1><p class="text-xs">Jam</p></li>
+    <li><h1 class="text-4xl">{{ remaining.minutes() }}</h1><p class="text-xs">Menit</p></li>
+    <li><h1 class="text-4xl">{{ remaining.seconds() }}</h1><p class="text-xs">Detik</p></li>
+  </ul>
+{% endif %}

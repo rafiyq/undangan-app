@@ -27,7 +27,7 @@ async fn fetch(
             let html = index.render().unwrap();
             Response::from_html(html)
         })
-        .get_async("/update", |_, _| async move {
+        .get_async("/countdown", |_, _| async move {
             let remaining = utils::make_duration(DT_UNDANGAN);
             let countdown = Countdown { 
                 remaining: Remaining::new(remaining) 

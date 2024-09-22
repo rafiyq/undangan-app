@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .dancing-script-family {
+        font-family: "Dancing Script", cursive;
+        font-optical-sizing: auto;
+        /* <weight>: Use a value from 400 to 700 */
+        font-weight: 400;
+        font-style: normal;
+    }
+    .montserrat-family{
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        /* <weight>: Use a value from 100 to 900 */
+        font-weight: 400;
+        font-style: normal;
+      }
+    .permanent-marker-family {
+        font-family: "Permanent Marker", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+    .btn-primary {
+        @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+    }
+}
