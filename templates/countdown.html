@@ -1,7 +1,8 @@
+{% let format_text = "dancing-script-family text-center text-amber-900" %}
 {% if remaining.days() > 0 %}
   <section 
     id="countdown"
-    class="dancing-script-family text-center"
+    class="{{ format_text }}"
     >
     <h1 class="text-4xl">{{ remaining.days() }}</h1>
     <p>Hari lagi</p>
@@ -9,7 +10,7 @@
 {% else if remaining.is_ongoing() %}
   <ul 
     id="countdown"
-    class="flex flex-row gap-4 justify-center text-center"
+    class="flex flex-row gap-4 justify-center {{ format_text }}"
     hx-get="/countdown" 
     hx-trigger="every 1s"
     hx-swap="innerHTML"

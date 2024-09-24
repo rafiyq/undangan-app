@@ -3,26 +3,43 @@
 @tailwind utilities;
 
 @layer base {
-    .dancing-script-family {
-        font-family: "Dancing Script", cursive;
-        font-optical-sizing: auto;
-        /* <weight>: Use a value from 400 to 700 */
-        font-weight: 400;
-        font-style: normal;
-    }
-    .montserrat-family{
-        font-family: "Montserrat", sans-serif;
-        font-optical-sizing: auto;
-        /* <weight>: Use a value from 100 to 900 */
-        font-weight: 400;
-        font-style: normal;
-      }
-    .permanent-marker-family {
-        font-family: "Permanent Marker", cursive;
-        font-weight: 400;
-        font-style: normal;
-    }
-    .btn-primary {
-        @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
-    }
+  #content {
+    @apply relative flex min-h-screen flex-col justify-center bg-rose-200 py-6 sm:py-12
+  }
+  .trajan-pro-bold {
+    font-family: 'Trajan Pro', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+  }
+  .dancing-script-family {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+  .gowun-batang-family {
+    font-family: "Gowun Batang", serif;
+    font-weight: 400;
+  }
+  .inter-family {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+  .btn-primary {
+    @apply rounded-full px-3 py-2 text-xs font-semibold min-w-fit max-w-full;
+  }
+  .nm-flat {
+    box-shadow: 0.2em 0.2em calc(0.2em * 2) rgb(0 0 0 / 0.1), 
+      calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) rgba(255, 255, 255, 0.5);
+  }
+  .nm-pressed {
+    box-shadow: inset 0.2em 0.2em calc(0.2em * 2) rgb(0 0 0 / 0.1), 
+      inset calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) rgba(255, 255, 255, 0.5);
+  }
+  .nm-concave {
+    background: (145deg, rgb(0 0 0 / 0.1), rgba(255, 255, 255, 0.5));
+  }
+  .nm-convex {
+    background: (145deg, rgba(255, 255, 255, 0.5), rgb(0 0 0 / 0.1));
+  }
 }
