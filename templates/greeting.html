@@ -1,7 +1,16 @@
 {% if let Some(guest) = guest %}
-  <p>Kepada Yang Terhormat</p>
-  <h1>Bapak/Ibu/Saudara/i</h1>
-  <h1>{{ guest.fullname }}</p>
-  <h2>di {{ guest.address }}</p>
-  <p>Waktu {{ guest.time }}</p>
+<section class="guwon-batang-family font-normal text-center text-xs">
+  <p class="font-bold">Yang Terhormat</p>
+  <p>Bapak/Ibu/Saudara/i</p>
+  <div class="nm-pressed p-3 rounded-lg text-base font">
+    {% if !guest.title.is_empty() %}
+      <h2>{{ guest.title }}</h2>
+    {% endif %}
+    <h1 class="font-bold">{{ guest.fullname }}</h1>
+    <p>di</p>
+    <h2>{{ guest.address }}</p>
+    <h2>Pukul {{ guest.session }}</p>
+  </div>
+  <p class="text-[0.25rem] overline">Mohon Maaf Bila Terdapat Kesalahan dalam Penulisan Nama dan Gelar</p>
+</section>
 {% endif %}

@@ -7,8 +7,9 @@ use serde::{Deserialize, Serialize};
 pub struct Guest {
 	username: String,
 	fullname: String,
+    title: String,
 	address: String,
-    time: String
+    session: String
 }
 
 pub struct Remaining {
