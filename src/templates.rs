@@ -65,7 +65,7 @@ pub struct IndexTemplate {
 }
 
 #[derive(Template)]
-#[template(path = "countdown.html")]
+#[template(path = "components/countdown.html")]
 pub struct Countdown {
     pub remaining: Remaining
 }
