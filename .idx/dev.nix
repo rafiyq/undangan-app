@@ -20,6 +20,7 @@ in {
       rustfmt
       targets.wasm32-unknown-unknown.stable.rust-std
     ])
+    pkgs.gnumake
     pkgs.nodejs
     pkgs.stdenv.cc
   ];
