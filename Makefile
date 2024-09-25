@@ -1,3 +1,5 @@
+export PATH := $(HOME)/.global_modules/bin:$(PATH)
+
 dev:
 	tailwindcss -i ./static/input.css -o ./static/style.css --minify
 	wrangler kv key put style.css --path static/style.css --binding static --preview
