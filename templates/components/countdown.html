@@ -1,22 +1,18 @@
-{% let format_text = "dancing-script-family text-center text-amber-900" %}
 {% if remaining.days() > 0 %}
-  <section 
-    id="countdown"
-    class="{{ format_text }}"
-    >
-    <h1 class="text-4xl">{{ remaining.days() }}</h1>
+  <section id="countdown">
+    <h1>{{ remaining.days() }}</h1>
     <p>Hari lagi</p>
   </section>
 {% else if remaining.is_ongoing() %}
   <ul 
     id="countdown"
-    class="flex flex-row gap-4 justify-center {{ format_text }}"
+    class="flex space-x-6"
     hx-get="/countdown" 
     hx-trigger="every 1s"
     hx-swap="innerHTML"
     >
-    <li><h1 class="text-4xl">{{ remaining.hours() }}</h1><p class="text-xs">Jam</p></li>
-    <li><h1 class="text-4xl">{{ remaining.minutes() }}</h1><p class="text-xs">Menit</p></li>
-    <li><h1 class="text-4xl">{{ remaining.seconds() }}</h1><p class="text-xs">Detik</p></li>
+    <li><h2>{{ remaining.hours() }}</h2><p>Jam</p></li>
+    <li><h2>{{ remaining.minutes() }}</h2><p>Menit</p></li>
+    <li><h2>{{ remaining.seconds() }}</h2><p>Detik</p></li>
   </ul>
 {% endif %}

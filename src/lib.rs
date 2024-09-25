@@ -1,13 +1,12 @@
-mod templates;
-mod utils;
-
 use askama::Template;
 use templates::{Countdown, Guest, IndexTemplate, Remaining};
 use utils::get_content_type;
 use worker::{event, Context, Env, Headers, Request, Response, Result, Router};
 
+mod templates;
+mod utils;
+
 const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
-const _DATE_TIME: &str = "27-Okt-2024 08:00:00 +0700";
 
 #[event(fetch, respond_with_errors)]
 async fn fetch(

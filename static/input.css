@@ -3,43 +3,59 @@
 @tailwind utilities;
 
 @layer base {
+  h1 { @apply text-4xl font-bold }
+  h2 { @apply text-3xl font-bold }
+  h3 { @apply text-2xl font-bold }
+  h4 { @apply text-xl font-bold }
+  h5 { @apply text-lg font-bold }
+  h6 { @apply text-base font-normal }
+  h7 { @apply text-sm font-normal }
+  p { @apply text-xs font-normal }
+
   #content {
-    @apply relative flex min-h-screen flex-col justify-center bg-rose-200 py-6 sm:py-12
+    @apply absolute h-full w-full items-center bg-[#f8f4e9] sm:py-12
   }
-  .trajan-pro-bold {
-    font-family: 'Trajan Pro', sans-serif;
-    font-style: normal;
-    font-weight: 700;
-  }
-  .dancing-script-family {
-    font-family: "Dancing Script", cursive;
-    font-optical-sizing: auto;
-    font-style: normal;
-  }
-  .gowun-batang-family {
-    font-family: "Gowun Batang", serif;
-    font-weight: 400;
-  }
-  .inter-family {
+  #index {
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+    box-shadow: 0.2em 0.2em calc(0.2em * 2) #d5d2c8,
+      calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) #ffffff;
+    @apply px-6 pt-10 pb-8 flex flex-col items-center justify-center space-y-6 bg-[#f8f4e9] text-[#71573c] sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10
+  }
+  #countdown {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-style: normal;
+    @apply text-center
+  }
+  #countdown li { @apply w-8 }
+  #countdown li h2 { @apply text-left }
+  #occasion {
+    font-family: 'Trajan Pro', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 700;
+    @apply text-center text-[#bc8947]
+  }
+  #greeting {
+    font-family: "Gowun Batang", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    @apply flex flex-col items-center text-center
+  }
+
+  .guest-box {
+    @apply my-1 flex flex-col space-y-0 w-4/5 rounded-lg border border-[#71573c]
   }
   .btn-primary {
-    @apply rounded-full px-3 py-2 text-xs font-semibold min-w-fit max-w-full;
+    box-shadow: 0.2em 0.2em calc(0.2em * 2) #d5d2c8,
+      calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) #ffffff;
+    @apply rounded-full px-3 py-2 text-xs font-semibold
   }
-  .nm-flat {
-    box-shadow: 0.2em 0.2em calc(0.2em * 2) rgb(0 0 0 / 0.1), 
-      calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) rgba(255, 255, 255, 0.5);
-  }
-  .nm-pressed {
-    box-shadow: inset 0.2em 0.2em calc(0.2em * 2) rgb(0 0 0 / 0.1), 
-      inset calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) rgba(255, 255, 255, 0.5);
-  }
-  .nm-concave {
-    background: (145deg, rgb(0 0 0 / 0.1), rgba(255, 255, 255, 0.5));
-  }
-  .nm-convex {
-    background: (145deg, rgba(255, 255, 255, 0.5), rgb(0 0 0 / 0.1));
+  .btn-primary:hover {
+    /* background: linear-gradient(145deg, #dad7d2, #fffff9); */
+    box-shadow: inset 0.2em 0.2em calc(0.2em * 2) #d5d2c8,
+      inset calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) #ffffff;
   }
 }
