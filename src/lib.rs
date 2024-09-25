@@ -31,11 +31,11 @@ async fn fetch(
                 None => Response::error("Not found", 404),
             }
         })
-        .get_async("/assets/:filename", |_, ctx| async move {
+        .get_async("/static/:filename", |_, ctx| async move {
             let filename = ctx.param("filename").unwrap();
-            let assets = ctx.kv("assets")?;
+            let kv = ctx.kv("static")?;
 
-            return match assets.get(filename).bytes().await? {
+            return match kv.get(filename).bytes().await? {
                 Some(file_content) => {
                     let mut headers = Headers::new();
                     headers.set("Content-Type", get_content_type(filename))?;
