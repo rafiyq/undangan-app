@@ -1,4 +1,3 @@
-use std::fmt::{self, Formatter, Display};
 use askama::Template;
 use chrono::{DateTime, Local, TimeDelta};
 use serde::{Deserialize, Serialize};
@@ -26,10 +25,6 @@ impl Remaining {
             .signed_duration_since(Local::now());
         Remaining { remaining, _end_date: datetime.to_string() }
     }
-    pub fn _update(mut self) {
-        self.remaining = DateTime::parse_from_rfc3339(self._end_date.as_str()).unwrap()
-            .signed_duration_since(Local::now());
-    }
     pub fn is_timeout(&self) -> bool {
         self.remaining.num_seconds() < 0
     }
@@ -47,13 +42,6 @@ impl Remaining {
     }
     pub fn seconds(&self) -> String {
         format!("{:02}", self.remaining.num_seconds() % 60)
-    }
-}
-
-impl Display for Remaining {
-    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "{} Day(s), {}:{}:{}",
-            self.days(), self.hours(), self.minutes(), self.seconds())
     }
 }
 
