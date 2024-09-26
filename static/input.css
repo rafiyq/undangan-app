@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  h1 { @apply text-6xl font-bold }
+  h1 { @apply text-5xl font-bold }
   h2 { @apply text-4xl font-bold }
   h3 { @apply text-3xl font-bold }
   h4 { @apply text-2xl font-bold }
@@ -18,19 +18,19 @@
     @apply min-h-fit px-6 pt-10 pb-8 flex flex-col gap-6 items-center justify-center bg-colour1 text-colour3 font-['Inter'] sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 sm:shadow-nm-flat
   }
   #countdown {
-    @apply py-4 font-['Dancing_Script'] text-center
+    @apply py-2 font-['Dancing_Script'] text-center
   }
   #countdown li { @apply w-8 }
   #countdown li h2 { @apply text-left }
   #occasion {
     @apply font-['Trajan_Pro'] font-bold text-center text-colour2
   }
+  #occasion p { @apply tracking-widest }
   #greeting {
-    @apply flex flex-col items-center font-['Gowun_Batang'] text-center
+    @apply w-full flex flex-col items-center font-['Gowun_Batang'] text-center
   }
-
-  .guest-box {
-    @apply my-1 flex flex-col space-y-0 w-4/5 rounded-lg border border-colour3
+  #guest-box {
+    @apply my-1 w-4/6 max-w-full rounded-lg border border-colour3 leading-tight
   }
   .btn-primary {
     @apply px-3 py-2 rounded-full shadow-nm-flat hover:shadow-nm-pressed font-semibold text-xs
