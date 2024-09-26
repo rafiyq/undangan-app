@@ -30,7 +30,7 @@
     @apply w-full flex flex-col items-center font-['Gowun_Batang'] text-center
   }
   #guest-box {
-    @apply my-1 w-4/6 max-w-full rounded-lg border border-colour3 leading-tight
+    @apply my-1 p-2 min-w-[4/6] max-w-full rounded-lg border border-colour3 leading-tight
   }
   .btn-primary {
     @apply px-3 py-2 rounded-full shadow-nm-flat hover:shadow-nm-pressed font-semibold text-xs
