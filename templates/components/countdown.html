@@ -1,18 +1,18 @@
 {% if remaining.days() > 0 %}
   <section id="countdown">
-    <h1>{{ remaining.days() }}</h1>
+    <h2>{{ remaining.days() }}</h1>
     <p>Hari lagi</p>
   </section>
 {% else if remaining.is_ongoing() %}
   <ul 
     id="countdown"
-    class="flex space-x-6"
+    class="flex gap-6"
     hx-get="/countdown" 
     hx-trigger="every 1s"
     hx-swap="innerHTML"
     >
-    <li><h2>{{ remaining.hours() }}</h2><p>Jam</p></li>
-    <li><h2>{{ remaining.minutes() }}</h2><p>Menit</p></li>
-    <li><h2>{{ remaining.seconds() }}</h2><p>Detik</p></li>
+    <li><h3>{{ remaining.minutes() }}</h3><p>Menit</p></li>
+    <li><h3>{{ remaining.hours() }}</h3><p>Jam</p></li>
+    <li><h3>{{ remaining.seconds() }}</h3><p>Detik</p></li>
   </ul>
 {% endif %}

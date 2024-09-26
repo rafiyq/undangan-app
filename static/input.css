@@ -3,59 +3,36 @@
 @tailwind utilities;
 
 @layer base {
-  h1 { @apply text-4xl font-bold }
-  h2 { @apply text-3xl font-bold }
-  h3 { @apply text-2xl font-bold }
-  h4 { @apply text-xl font-bold }
-  h5 { @apply text-lg font-bold }
-  h6 { @apply text-base font-normal }
-  h7 { @apply text-sm font-normal }
-  p { @apply text-xs font-normal }
+  h1 { @apply text-6xl font-bold }
+  h2 { @apply text-4xl font-bold }
+  h3 { @apply text-3xl font-bold }
+  h4 { @apply text-2xl font-bold }
+  h5 { @apply text-xl font-bold }
+  h6 { @apply text-lg font-bold }
+  h7 { @apply text-base font-bold }
 
   #content {
-    @apply absolute h-full w-full items-center bg-[#f8f4e9] sm:py-12
+    @apply relative h-full w-full bg-colour1 sm:py-12
   }
   #index {
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    box-shadow: 0.2em 0.2em calc(0.2em * 2) #d5d2c8,
-      calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) #ffffff;
-    @apply px-6 pt-10 pb-8 flex flex-col items-center justify-center space-y-6 bg-[#f8f4e9] text-[#71573c] sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10
+    @apply min-h-fit px-6 pt-10 pb-8 flex flex-col gap-6 items-center justify-center bg-colour1 text-colour3 font-['Inter'] sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 sm:shadow-nm-flat
   }
   #countdown {
-    font-family: "Dancing Script", cursive;
-    font-optical-sizing: auto;
-    font-style: normal;
-    @apply text-center
+    @apply py-4 font-['Dancing_Script'] text-center
   }
   #countdown li { @apply w-8 }
   #countdown li h2 { @apply text-left }
   #occasion {
-    font-family: 'Trajan Pro', sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    font-weight: 700;
-    @apply text-center text-[#bc8947]
+    @apply font-['Trajan_Pro'] font-bold text-center text-colour2
   }
   #greeting {
-    font-family: "Gowun Batang", serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    @apply flex flex-col items-center text-center
+    @apply flex flex-col items-center font-['Gowun_Batang'] text-center
   }
 
   .guest-box {
-    @apply my-1 flex flex-col space-y-0 w-4/5 rounded-lg border border-[#71573c]
+    @apply my-1 flex flex-col space-y-0 w-4/5 rounded-lg border border-colour3
   }
   .btn-primary {
-    box-shadow: 0.2em 0.2em calc(0.2em * 2) #d5d2c8,
-      calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) #ffffff;
-    @apply rounded-full px-3 py-2 text-xs font-semibold
-  }
-  .btn-primary:hover {
-    /* background: linear-gradient(145deg, #dad7d2, #fffff9); */
-    box-shadow: inset 0.2em 0.2em calc(0.2em * 2) #d5d2c8,
-      inset calc(0.2em * -1) calc(0.2em * -1) calc(0.2em * 2) #ffffff;
+    @apply px-3 py-2 rounded-full shadow-nm-flat hover:shadow-nm-pressed font-semibold text-xs
   }
 }
