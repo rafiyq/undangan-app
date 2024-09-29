@@ -12,13 +12,13 @@ in {
 
   # Use https://search.nixos.org/packages to find packages
   packages = [
-    (with fenix; with stable; combine [
-      cargo
-      clippy
-      rust-src
-      rustc
-      rustfmt
-      targets.wasm32-unknown-unknown.stable.rust-std
+    (with fenix; combine [
+      minimal.cargo
+      minimal.rustc
+      latest.clippy
+      latest.rustfmt
+      latest.rust-src
+      targets.wasm32-unknown-unknown.latest.rust-std
     ])
     pkgs.gnumake
     pkgs.nodejs
@@ -45,6 +45,7 @@ in {
     npm-update = "npm install -g npm@latest";
     wrangler-install = "npm install -g wrangler@latest";
     tailwindcss-install = "npm install -g tailwindcss@latest";
+    cargo-leptos-install = "cargo install cargo-leptos --locked";
     worker-build-install = "cargo install worker-build";
   };
 }
