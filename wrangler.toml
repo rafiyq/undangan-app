@@ -2,6 +2,12 @@ name = "undangan-app"
 main = "build/worker/shim.mjs"
 compatibility_date = "2024-09-03"
 
+[assets]
+directory = "./public"
+
+[build]
+command = "cargo leptos build --release && LEPTOS_OUTPUT_NAME=start-axum worker-build --release --features ssr"
+
 routes = [
   { pattern = "dianrafiyq.site", custom_domain = true }
 ]
@@ -21,6 +27,3 @@ preview_database_id = "33b96b18-465e-4994-be58-c75d49b2172f"
 binding = "bucket"
 bucket_name = "undangan"
 preview_bucket_name = "undangan-preview"
-
-[build]
-command = "worker-build --release"

@@ -1,77 +1,65 @@
-use askama::Template;
-use templates::{Countdown, Guest, IndexTemplate, Remaining};
-use utils::get_content_type;
-use worker::{event, Context, Env, Headers, Request, Response, Result, Router};
+//! Setup our Cloudflare worker (`feature == "ssr"`) and our leptos hydration function (`feature ==
+//! "hydrate"`)
 
-mod templates;
-mod utils;
+#[cfg(feature = "ssr")]
+use worker::*;
 
-const DT_UNDANGAN: &str = "2024-10-27T08:00:00+07:00";
+use leptos::*;
 
-#[event(fetch, respond_with_errors)]
+mod app;
+
+use crate::app::App;
+
+#[cfg(feature = "ssr")]
+async fn router(env: Env) -> axum::Router {
+    use std::sync::Arc;
+
+    use axum::{routing::post, Extension};
+    use leptos_axum::{generate_route_list, LeptosRoutes};
+
+    // Match what's in Cargo.toml
+    // Doesn't seem to be able to do this automatically
+    let leptos_options = LeptosOptions {
+        output_name: "undangan_app".into(),
+        site_root: "public".into(),
+        site_pkg_dir: "pkg".into(),
+        env: leptos_config::Env::DEV,
+        site_addr: "127.0.0.1:8787".parse().unwrap(),
+        reload_port: 3001,
+        reload_external_port: None,
+        reload_ws_protocol: leptos_config::ReloadWSProtocol::WS,
+        not_found_path: "/404".into(),
+        hash_file: "hash.txt".into(),
+        hash_files: false,
+    };
+    let routes = generate_route_list(|| view! { <App /> });
+
+    // build our application with a route
+    axum::Router::new()
+        .leptos_routes(&leptos_options, routes, || view! { <App/> })
+        .with_state(leptos_options)
+        .layer(Extension(Arc::new(env))) // <- Allow leptos server functions to access Worker stuff
+}
+
+#[cfg(feature = "ssr")]
+#[event(fetch)]
 async fn fetch(
-    req: Request,
+    req: HttpRequest,
     env: Env,
     _ctx: Context,
-) -> Result<Response> {
+) -> Result<axum::http::Response<axum::body::Body>> {
+    use tower_service::Service;
+
     console_error_panic_hook::set_once();
 
-    Router::new()
-        .get_async("/", |_, _| async move { index(None) })
-        .get_async("/countdown", |_, _| async move { countdown() })
-        .get_async("/tamu/:username", |_, ctx| async move {
-            let username = ctx.param("username").unwrap();
-            let d1 = ctx.env.d1("DB")?;
-            let statement = d1.prepare("SELECT * FROM Guests WHERE username = ?1");
-            let query = statement.bind(&[username.into()])?;
-
-            match query.first::<Guest>(None).await? {
-                Some(guest) => index(Some(guest)),
-                None => Response::error("Not found", 404),
-            }
-        })
-        .get_async("/static/:filename", |_, ctx| async move {
-            let filename = ctx.param("filename").unwrap();
-            let kv = ctx.kv("static")?;
-
-            return match kv.get(filename).bytes().await? {
-                Some(file_content) => {
-                    let mut headers = Headers::new();
-                    headers.set("Content-Type", get_content_type(filename))?;
-                    Ok(Response::from_bytes(file_content)?.with_headers(headers))
-                },
-                None => Response::error("Item Not Found", 404)
-            };
-        })
-        .get_async("/bucket/:filename", |_, ctx| async move {
-            let filename = ctx.param("filename").unwrap();
-            let bucket = ctx.bucket("bucket")?;
-
-            return match bucket.get(filename).execute().await? {
-                Some(object) => {
-                    let body = object.body().unwrap().bytes().await?;
-                    let http_header = object.http_metadata().content_type.unwrap_or("application/octet-stream".to_string());
-                    let mut headers = Headers::new();
-                    headers.set("Content-Type", &http_header)?;
-                    Ok(Response::from_bytes(body)?.with_headers(headers))
-                },
-                None => Response::error("Item Not Found", 404)
-            };
-        })
-        .run(req, env).await
+    Ok(router(env).await.call(req).await?)
 }
 
-fn index(guest: Option<Guest>) -> Result<Response> {
-    let index = IndexTemplate { 
-        guest,
-        remaining: Remaining::from_rfc3339(DT_UNDANGAN)
-    };
-    Response::from_html(index.render().unwrap())
-}
+#[cfg(feature = "hydrate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn hydrate() {
+    _ = console_log::init_with_level(log::Level::Debug);
+    console_error_panic_hook::set_once();
 
-fn countdown() -> Result<Response> {
-    let countdown = Countdown {
-        remaining: Remaining::from_rfc3339(DT_UNDANGAN)
-    };
-    Response::from_html(countdown.render().unwrap())
+    leptos::mount_to_body(|| view! { <App/> });
 }
