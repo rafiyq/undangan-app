@@ -7,6 +7,7 @@ use worker::*;
 use leptos::*;
 
 mod app;
+mod components;
 
 use crate::app::App;
 
