@@ -1,7 +1,5 @@
-target
-node_modules
-.wrangler
 .env
-static/style.css
-public/pkg
+.wrangler
 build
+node_modules
+target

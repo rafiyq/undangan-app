@@ -14,7 +14,7 @@ use crate::app::App;
 async fn router(env: Env) -> axum::Router {
     use std::sync::Arc;
 
-    use axum::{routing::post, Extension};
+    use axum::{Extension, Router};
     use leptos_axum::{generate_route_list, LeptosRoutes};
 
     // Match what's in Cargo.toml
@@ -35,7 +35,7 @@ async fn router(env: Env) -> axum::Router {
     let routes = generate_route_list(|| view! { <App /> });
 
     // build our application with a route
-    axum::Router::new()
+    Router::new()
         .leptos_routes(&leptos_options, routes, || view! { <App/> })
         .with_state(leptos_options)
         .layer(Extension(Arc::new(env))) // <- Allow leptos server functions to access Worker stuff
