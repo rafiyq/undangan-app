@@ -1,7 +1,7 @@
 use leptos::*;
 use leptos_meta::{provide_meta_context, Stylesheet, Title};
 use leptos_router::*;
-use crate::components::countdown::Countdown;
+use crate::components::{countdown::Countdown, occasion::Occasion};
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -11,7 +11,7 @@ pub fn App() -> impl IntoView {
     view! {
         <Stylesheet id="leptos" href="/pkg/undangan_app.css"/>
         <Router>
-            <main>
+            <main id="content">
                 <Routes>
                     <Route path="" view=HomePage/>
                     <Route path="/undangan" view=UndanganPage/>
@@ -26,9 +26,13 @@ fn HomePage() -> impl IntoView {
     let rfc3339 = "2024-10-27T08:00:00+07:00";
 
     view! {
-        <Title text="Welcome"/>
-        <Countdown rfc3339 />
-        <h1>"Hello world!"</h1>
+        <Title text="Beranda - Dian Rafiyq"/>
+        <article id="index">
+            <Occasion />
+            <Countdown rfc3339 />
+            // <Greeting />
+            <button class="btn-primary" href="/undangan">Buka Undangan</button>
+        </article>
     }
 }
 
