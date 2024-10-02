@@ -27,7 +27,7 @@ in {
 
   # Sets environment variables in the workspace
   env = {
-    RUST_SRC_PATH = "${fenix.latest.rust-src}/lib/rustlib/src/rust/library";
+    RUST_SRC_PATH = "${fenix.stable.rust-src}/lib/rustlib/src/rust/library";
     PATH = ["$HOME/.cargo/bin"];
   };
 
