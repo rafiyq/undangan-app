@@ -1,5 +1,5 @@
 use leptos::*;
-use leptos_meta::{provide_meta_context, Stylesheet, Title};
+use leptos_meta::{provide_meta_context, Link, Stylesheet, Title};
 use leptos_router::*;
 use crate::components::{countdown::Countdown, occasion::Occasion};
 
@@ -9,14 +9,17 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
+        <Link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <Link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+        <Stylesheet id="google-font" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Gowun+Batang:wght@400;700&family=Merriweather:wght@700;900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"/>
+        <Stylesheet id="trajan-pro" href="https://fonts.cdnfonts.com/css/trajan-pro"/>
         <Stylesheet id="leptos" href="/pkg/undangan_app.css"/>
+        <Link rel="preload" type_="image/x-icon" href="/favicon.ico"/>
         <Router>
-            <main id="content">
-                <Routes>
-                    <Route path="" view=HomePage/>
-                    <Route path="/undangan" view=UndanganPage/>
-                </Routes>
-            </main>
+            <Routes>
+                <Route path="" view=HomePage/>
+                <Route path="/undangan" view=UndanganPage/>
+            </Routes>
         </Router>
     }
 }
@@ -27,12 +30,12 @@ fn HomePage() -> impl IntoView {
 
     view! {
         <Title text="Beranda - Dian Rafiyq"/>
-        <article id="index">
+        <main id="index">
             <Occasion />
             <Countdown rfc3339 />
             // <Greeting />
             <button class="btn-primary" href="/undangan">Buka Undangan</button>
-        </article>
+        </main>
     }
 }
 

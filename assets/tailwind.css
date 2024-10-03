@@ -11,8 +11,8 @@
   h6 { @apply text-lg font-bold }
   h7 { @apply text-base font-bold }
 
-  #content {
-    @apply relative h-full w-full bg-colour1 sm:py-12
+  body {
+    @apply h-full w-full bg-colour1 sm:py-12
   }
   #index {
     @apply min-h-fit px-6 pt-10 pb-8 flex flex-col gap-6 items-center justify-center bg-colour1 text-colour3 font-['Inter'] sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 sm:shadow-nm-flat
