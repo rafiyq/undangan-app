@@ -2,26 +2,24 @@ name = "undangan-app"
 main = "build/worker/shim.mjs"
 compatibility_date = "2024-09-03"
 
+route = { pattern = "dianrafiyq.site", custom_domain = true }
+
 [assets]
 directory = "./target/site"
 
 [build]
 command = "cargo leptos build --release && LEPTOS_OUTPUT_NAME=start-axum worker-build --release --features ssr"
 
-routes = [
-  { pattern = "dianrafiyq.site", custom_domain = true }
-]
-
-[[kv_namespaces]]
-binding = "static"
-id = "1e24783fe4a5499fa1f1988190c48c1d"
-preview_id = "0a1fa7dd2cb2496488689052d27bcbed"
-
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "guest-list"
 database_id = "4188cd29-38ac-4c78-8f9d-07288a1a494a"
 preview_database_id = "33b96b18-465e-4994-be58-c75d49b2172f"
+
+[[kv_namespaces]]
+binding = "static"
+id = "1e24783fe4a5499fa1f1988190c48c1d"
+preview_id = "0a1fa7dd2cb2496488689052d27bcbed"
 
 [[r2_buckets]]
 binding = "bucket"
