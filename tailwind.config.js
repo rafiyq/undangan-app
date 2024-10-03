@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export const content = ["./templates/**/*.html"];
+export const content = ["./src/**/*.rs"];
 export const theme = {
   extend: {
     boxShadow: {
