@@ -3,7 +3,7 @@
 
 { pkgs, ... }: 
 let 
-  # Rust toolchains for Nix. see: https://github.com/nix-community/fenix
+  # Rust toolchains for Nix
   fenix = import (fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz") { };
 in {
 
@@ -15,12 +15,8 @@ in {
     (with fenix; combine [
       minimal.cargo
       minimal.rustc
-      latest.clippy
-      latest.rustfmt
-      latest.rust-src
       targets.wasm32-unknown-unknown.latest.rust-std
     ])
-    pkgs.gnumake
     pkgs.nodejs
     pkgs.stdenv.cc
   ];
