@@ -7,6 +7,7 @@ use worker::*;
 use leptos::*;
 
 mod app;
+mod api;
 mod components;
 
 use crate::app::App;
@@ -15,8 +16,9 @@ use crate::app::App;
 async fn router(env: Env) -> axum::Router {
     use std::sync::Arc;
 
-    use axum::{Extension, Router};
-    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use axum::{routing::get, Extension, Router};
+    use leptos_axum::{generate_route_list, handle_server_fns, LeptosRoutes};
+    use crate::api::register_server_functions;
 
     // Match what's in Cargo.toml
     // Doesn't seem to be able to do this automatically
@@ -35,8 +37,11 @@ async fn router(env: Env) -> axum::Router {
     };
     let routes = generate_route_list(|| view! { <App /> });
 
+    register_server_functions();
+
     // build our application with a route
     Router::new()
+        .route("/api/*fn_name", get(handle_server_fns))
         .leptos_routes(&leptos_options, routes, || view! { <App/> })
         .with_state(leptos_options)
         .layer(Extension(Arc::new(env))) // <- Allow leptos server functions to access Worker stuff
