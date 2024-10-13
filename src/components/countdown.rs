@@ -1,6 +1,5 @@
-use leptos::*;
+use leptos::prelude::*;
 use chrono::{DateTime, Local, TimeDelta};
-use leptos_dom::helpers::IntervalHandle;
 use std::time::Duration;
 
 #[derive(Clone)]
@@ -44,9 +43,9 @@ pub fn Countdown(rfc3339: &'static str) -> impl IntoView {
                 <h2>{ remaining.days() }</h2>
                 <p>"Hari lagi"</p>
             </ul>
-        }
+        }.into_any()
     } else if !remaining.is_timeout() {
-        let rem_hms = create_rw_signal(remaining);
+        let rem_hms = RwSignal::new(remaining);
 
         use_interval(1000, move || {
             rem_hms.update(|rem| {
@@ -60,8 +59,8 @@ pub fn Countdown(rfc3339: &'static str) -> impl IntoView {
                 <li><h3>{ move || rem_hms.get().minutes() }</h3><p>"Menit"</p></li>
                 <li><h3>{ move || rem_hms.get().seconds() }</h3><p>"Detik"</p></li>
             </ul>
-        }
-    } else {view! {<ul></ul>}}
+        }.into_any()
+    } else { view! {}.into_any() }
 }
 
 // source: https://github.com/leptos-rs/leptos/blob/main/examples/timer/src/lib.rs

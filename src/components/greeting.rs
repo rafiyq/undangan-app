@@ -1,6 +1,4 @@
-use leptos::*;
-use leptos_dom::logging::console_log;
-use crate::api::d1::get_guest;
+use leptos::prelude::*;
 
 #[component]
 pub fn Greeting() -> impl IntoView {
