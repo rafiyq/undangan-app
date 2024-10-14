@@ -26,3 +26,10 @@ pub async fn get_guest(username: String) -> Result<Option<Guest>, ServerFnError>
     let result = query.first::<Guest>(None).await.unwrap();
     Ok(result)
 }
+
+#[cfg(feature = "ssr")]
+pub fn register_server_functions() {
+    use leptos::server_fn::axum::register_explicit;
+
+    register_explicit::<GetGuest>();
+}

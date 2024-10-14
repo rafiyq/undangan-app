@@ -1,8 +1,7 @@
 use leptos::{either::Either, prelude::*};
 use leptos_router::hooks::use_params_map;
-// use crate::api::d1::Guest;
-use crate::api::d1::get_guest;
 use send_wrapper::SendWrapper;
+use crate::api::get_guest;
 
 #[component]
 pub fn Greeting() -> impl IntoView {
@@ -27,7 +26,7 @@ pub fn Greeting() -> impl IntoView {
         }>
             {move || Suspend::new(async move {
                 match guest.await.clone() {
-                    None => Either::Left(view! { <h1>"User not found."</h1> }),
+                    None => Either::Left(view! {}),
                     Some(guest) => {
                         Either::Right(
                             view! {
