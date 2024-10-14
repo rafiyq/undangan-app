@@ -34,7 +34,7 @@ pub fn App() -> impl IntoView {
         <Stylesheet id="google-font" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Gowun+Batang:wght@400;700&family=Merriweather:wght@700;900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"/>
         <Stylesheet id="trajan-pro" href="https://fonts.cdnfonts.com/css/trajan-pro"/>
         <Stylesheet id="leptos" href="/pkg/undangan_app.css"/>
-        <Meta name="description" content="Leptos implementation of a HackerNews demo."/>
+        <Meta name="description" content="Undangan Dian dan Rafiyq"/>
         <Router>
             <FlatRoutes fallback=|| "Not found.">
                 <Route path=(StaticSegment("tamu"), ParamSegment("username")) view=HomePage/>
