@@ -1,15 +1,14 @@
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, Link, Meta, MetaTags, Stylesheet, Title};
 use leptos_router::{
-    components::{FlatRoutes, Route, Router},
-    ParamSegment, StaticSegment,
+    components::{FlatRoutes, Route, Router}, ParamSegment, StaticSegment
 };
 use crate::components::{countdown::Countdown, occasion::Occasion, greeting::Greeting};
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
         <!DOCTYPE html>
-        <html lang="en">
+        <html lang="id">
             <head>
                 <meta charset="utf-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -48,13 +47,7 @@ pub fn App() -> impl IntoView {
 
 #[component]
 fn HomePage() -> impl IntoView {
-    let rfc3339 = "2024-10-27T08:00:00+07:00";
-    // let params = use_params_map();
-    // let username = move || params.with(|p| p.get("username").unwrap().to_string());
-    // console_log(&username());
-    // let guest = Resource::new(
-    //     move || params.read().get("username")
-    // );
+    let rfc3339 = "2024-10-14T08:00:00+07:00";
 
     view! {
         <Title text="Beranda - Dian Rafiyq"/>

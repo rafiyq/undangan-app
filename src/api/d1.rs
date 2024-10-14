@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Deserialize, Serialize, PartialEq, Eq, Clone)]
 pub struct Guest {
 	pub username: String,
 	pub fullname: String,

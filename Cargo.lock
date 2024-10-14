@@ -1945,6 +1945,7 @@ dependencies = [
  "leptos_router",
  "log",
  "once_cell",
+ "send_wrapper",
  "serde",
  "serde_json",
  "tower 0.5.1",

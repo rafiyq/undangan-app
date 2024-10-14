@@ -3,14 +3,16 @@ use worker::*;
 
 pub mod app;
 pub mod components;
+pub mod api;
 
 #[cfg(feature = "ssr")]
 async fn router(env: Env) -> axum::Router {
-    use axum::{Extension, Router};
+    use axum::{routing::post, Extension, Router};
     use leptos::prelude::*;
-    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use leptos_axum::{generate_route_list, handle_server_fns, LeptosRoutes};
     use std::sync::Arc;
     use crate::app::{App, shell};
+    use crate::api::register_server_functions;
 
     // Match what's in Cargo.toml
     // Doesn't seem to be able to do this automatically
@@ -29,8 +31,10 @@ async fn router(env: Env) -> axum::Router {
     };
 
     let routes = generate_route_list(App);
+    register_server_functions();
 
     Router::new()
+        .route("/api/*fn_name", post(handle_server_fns))
         .leptos_routes(&leptos_options, routes, {
             let leptos_options = leptos_options.clone();
             move || shell(leptos_options.clone())
