@@ -35,13 +35,14 @@ impl Remaining {
 
 #[component]
 pub fn Countdown() -> impl IntoView {
+    let css = "py-2 font-['Dancing_Script'] text-center";
     let datetime = "2024-10-27T08:00:00+07:00";
     let remaining = Remaining::from_rfc3339(datetime);
 
     if remaining.days() > 0 {
         view! {
-            <ul id="countdown">
-                <h2>{ remaining.days() }</h2>
+            <ul class={css}>
+                <h1 class="text-4xl">{ remaining.days() }</h1>
                 <p>"Hari lagi"</p>
             </ul>
         }.into_any()
@@ -55,10 +56,10 @@ pub fn Countdown() -> impl IntoView {
         });
 
         view! {
-            <ul id="countdown" class="flex gap-6">
-                <li><h3>{ move || rem_hms.get().hours() }</h3><p>"Jam"</p></li>
-                <li><h3>{ move || rem_hms.get().minutes() }</h3><p>"Menit"</p></li>
-                <li><h3>{ move || rem_hms.get().seconds() }</h3><p>"Detik"</p></li>
+            <ul class={format!("{css} flex gap-6")}>
+                <li class="w-8"><h1 class="text-left text-3xl">{ move || rem_hms.get().hours() }</h1><p>"Jam"</p></li>
+                <li class="w-8"><h1 class="text-left text-3xl">{ move || rem_hms.get().minutes() }</h1><p>"Menit"</p></li>
+                <li class="w-8"><h1 class="text-left text-3xl">{ move || rem_hms.get().seconds() }</h1><p>"Detik"</p></li>
             </ul>
         }.into_any()
     } else { view! {}.into_any() }

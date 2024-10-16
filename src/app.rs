@@ -64,7 +64,7 @@ fn HomePage() -> impl IntoView {
 fn UndanganPage() -> impl IntoView {
     view! {
         <Title text="Undangan - Dian Rafiyq"/>
-        <main class="flex flex-col justify-center bg-gray-500">
+        <main class="flex flex-col justify-center bg-gray-50">
             <video autoplay loop controls controlslist="play timeline volume" class="h-dvh aspect-[9/16] mx-auto shadow-nm-flat"> 
                 <source src="https://r2.dianrafiyq.site/Dian%26Rafiyq%20Live_20241015_183829_0001.mp4" type="video/mp4"/>
             </video>

@@ -20,7 +20,7 @@ pub fn Greeting() -> impl IntoView {
     );
 
     view! {
-        <section id="greeting">
+        <section class="w-full flex flex-col items-center font-['Gowun_Batang'] text-center">
         <Suspense fallback=|| {
             view! { "Loading..." }
         }>
@@ -32,11 +32,11 @@ pub fn Greeting() -> impl IntoView {
                             view! {
                                 <p class="font-bold leading-none">"Kepada Yang Terhormat"</p>
                                 <p>"Bapak/Ibu/Saudara/i"</p>
-                                <div id="guest-box">
-                                    <h6 class="font-normal">{guest.title}</h6>
-                                    <h6 class="font-['Merriweather'] font-extrabold">{guest.fullname}</h6>
+                                <div class="my-1 p-2 min-w-[4/6] max-w-full rounded-lg border border-colour3 leading-tight">
+                                    <h1 class="font-normal text-lg">{guest.title}</h1>
+                                    <h1 class="font-['Merriweather'] text-lg font-extrabold">{guest.fullname}</h1>
                                     <p>di</p>
-                                    <h6 class="font-normal">"address"</h6>
+                                    <h1 class="font-normal text-lg">"address"</h1>
                                     <p>"Pukul " {guest.session}</p>
                                 </div>
                                 <p class="text-[0.5em] overline ">"Mohon Maaf Bila Terdapat Kesalahan dalam Penulisan Nama dan Gelar "</p>
