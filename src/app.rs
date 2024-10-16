@@ -51,11 +51,13 @@ fn HomePage() -> impl IntoView {
 
     view! {
         <Title text="Beranda - Dian Rafiyq"/>
-        <main id="index">
-            <Occasion />
-            <Countdown rfc3339 />
-            <Greeting />
-            <button class="btn-primary" href="/undangan">Buka Undangan</button>
+        <main class="sm:py-12">
+            <article id="index">
+                <Occasion />
+                <Countdown rfc3339 />
+                <Greeting />
+                <a class="btn-primary" href="/undangan">Buka Undangan</a>
+            </article>
         </main>
     }
 }
@@ -63,6 +65,11 @@ fn HomePage() -> impl IntoView {
 #[component]
 fn UndanganPage() -> impl IntoView {
     view! {
-        <h1>"Undangan Page"</h1>
+        <Title text="Undangan - Dian Rafiyq"/>
+        <main>
+            <video autoplay controls id="undangan">
+                <source src="https://r2.dianrafiyq.site/Dian%26Rafiyq%20Live_20241015_183829_0001.mp4" type="video/mp4"/>
+            </video>
+        </main>
     }
 }

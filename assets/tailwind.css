@@ -12,10 +12,13 @@
   h7 { @apply text-base font-bold }
 
   body {
-    @apply h-full w-full bg-colour1 sm:py-12
+    @apply bg-colour1
   }
   #index {
     @apply min-h-fit px-6 pt-10 pb-8 flex flex-col gap-6 items-center justify-center bg-colour1 text-colour3 font-['Inter'] sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 sm:shadow-nm-flat
+  }
+  #undangan {
+    @apply h-screen aspect-[9/16] sm:mx-auto sm:my-12 sm:rounded-lg sm:shadow-nm-flat
   }
   #countdown {
     @apply py-2 font-['Dancing_Script'] text-center
