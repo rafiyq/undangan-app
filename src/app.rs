@@ -47,14 +47,12 @@ pub fn App() -> impl IntoView {
 
 #[component]
 fn HomePage() -> impl IntoView {
-    let rfc3339 = "2024-10-14T08:00:00+07:00";
-
     view! {
         <Title text="Beranda - Dian Rafiyq"/>
-        <main class="sm:py-12">
-            <article id="index">
+        <main class="flex min-h-dvh flex-col justify-center sm:py-12 bg-colour1 text-colour3 font-['Inter']">
+            <article class="px-6 pt-10 pb-8 flex flex-col gap-6 justify-center sm:mx-auto sm:aspect-[3/4] sm:rounded-lg sm:px-10 sm:shadow-nm-flat">
                 <Occasion />
-                <Countdown rfc3339 />
+                <Countdown />
                 <Greeting />
                 <a class="btn-primary" href="/undangan">Buka Undangan</a>
             </article>
@@ -66,8 +64,8 @@ fn HomePage() -> impl IntoView {
 fn UndanganPage() -> impl IntoView {
     view! {
         <Title text="Undangan - Dian Rafiyq"/>
-        <main>
-            <video autoplay controls id="undangan">
+        <main class="flex flex-col justify-center bg-gray-500">
+            <video autoplay loop controls controlslist="play timeline volume" class="h-dvh aspect-[9/16] mx-auto shadow-nm-flat"> 
                 <source src="https://r2.dianrafiyq.site/Dian%26Rafiyq%20Live_20241015_183829_0001.mp4" type="video/mp4"/>
             </video>
         </main>

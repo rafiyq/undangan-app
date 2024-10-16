@@ -34,8 +34,9 @@ impl Remaining {
 }
 
 #[component]
-pub fn Countdown(rfc3339: &'static str) -> impl IntoView {
-    let remaining = Remaining::from_rfc3339(rfc3339);
+pub fn Countdown() -> impl IntoView {
+    let datetime = "2024-10-27T08:00:00+07:00";
+    let remaining = Remaining::from_rfc3339(datetime);
 
     if remaining.days() > 0 {
         view! {
