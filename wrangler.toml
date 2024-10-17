@@ -8,7 +8,7 @@ route = { pattern = "dianrafiyq.site", custom_domain = true }
 directory = "./target/site"
 
 [build]
-command = "cargo leptos build --release && LEPTOS_OUTPUT_NAME=start-axum worker-build --release --features ssr"
+command = "cargo leptos build --release && LEPTOS_OUTPUT_NAME=undangan_app worker-build --release --features ssr"
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB

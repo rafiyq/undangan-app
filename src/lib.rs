@@ -9,27 +9,13 @@ pub mod api;
 async fn router(env: Env) -> axum::Router {
     use axum::{routing::post, Extension, Router};
     use leptos::prelude::*;
-    use leptos_axum::{generate_route_list, handle_server_fns, LeptosRoutes};
+    use leptos_axum::{ generate_route_list, handle_server_fns, LeptosRoutes};
     use std::sync::Arc;
     use crate::app::{App, shell};
     use crate::api::register_server_functions;
 
-    // Match what's in Cargo.toml
-    // Doesn't seem to be able to do this automatically
-    let leptos_options = LeptosOptions {
-        output_name: "undangan_app".into(),
-        site_root: "target/site".into(),
-        site_pkg_dir: "pkg".into(),
-        env: Env::DEV,
-        site_addr: "127.0.0.1:8787".parse().unwrap(),
-        reload_port: 3001,
-        reload_external_port: None,
-        reload_ws_protocol: ReloadWSProtocol::WS,
-        not_found_path: "/404".into(),
-        hash_file: "hash.txt".into(),
-        hash_files: false,
-    };
-
+    let conf = get_configuration(None).unwrap();
+    let leptos_options = conf.leptos_options;
     let routes = generate_route_list(App);
     register_server_functions();
 
