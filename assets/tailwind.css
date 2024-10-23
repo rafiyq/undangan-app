@@ -8,4 +8,7 @@
   .btn-primary {
     @apply w-fit mx-auto px-3 py-2 rounded-full shadow-nm-flat hover:shadow-nm-pressed font-semibold text-xs
   }
+  .btn {
+    @apply w-fit mx-auto px-3 py-2 rounded-full font-semibold text-xs
+  }
 }
